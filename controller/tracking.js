@@ -61,6 +61,8 @@ const getTrackingDetails = async (req, res) => {
 
     const shipmentDetails = {
       awbNumber: docData.awbNumber,
+      consigneephonenumber: docData.consigneephonenumber,
+      consignorphonenumber: docData.consignorphonenumber,
       Delivery_Mode: docData.service,
       Number_of_Boxes: docData.actualNoOfPackages
         ? docData.actualNoOfPackages
@@ -222,6 +224,9 @@ const getTrackingDetails_UPS = async (req, res) => {
 
     const shipmentDetails = {
       awbNumber: docData.awbNumber,
+      consigneephonenumber: docData.consigneephonenumber,
+      consignorphonenumber: docData.consignorphonenumber,
+
       Delivery_Mode: docData.service,
       Number_of_Boxes: docData.actualNoOfPackages
         ? docData.actualNoOfPackages

@@ -22,7 +22,7 @@ function convertToFullDate(input) {
 }
 
 function formatReadableDate(date) {
-  const options = { day: "numeric", month: "long" };
+  const options = { day: "numeric", month: "short" };
   return date.toLocaleDateString("en-US", options);
 }
 
