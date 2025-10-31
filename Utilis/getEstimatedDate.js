@@ -34,7 +34,7 @@ function getEstimatedDate(packageConnectedDataTime, service, destination) {
       : service === "Economy"
       ? { start: 5, end: 7 }
       : service === "Duty Free" && destination === "United Kingdom"
-      ? { start: 10, end: 14 }
+      ? { start: 6, end: 8 }
       : service === "Duty Free"
       ? { start: 10, end: 14 }
       : null;
