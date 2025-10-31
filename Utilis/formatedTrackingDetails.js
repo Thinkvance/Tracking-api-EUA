@@ -71,7 +71,6 @@ function getUpdatedTrackingStructure(
   }
 
   const result = processTrackingData(trackingData || []);
-  console.log("trackingData", trackingData);
 
   const resultMap = new Map(result.map((item) => [item.Status, item]));
 
@@ -109,7 +108,6 @@ function getUpdatedTrackingStructure(
   if (lastIndex !== undefined && lastIndex !== null && lastIndex >= 0) {
     updatedStructure[lastIndex].dropdown = "View More";
   }
-  console.log("lastIndex", updatedStructure[1]);
   const formatedDate = trackingData.map((value) => ({
     Status: value.status,
     Description: value.description,

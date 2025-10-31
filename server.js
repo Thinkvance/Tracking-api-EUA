@@ -8,13 +8,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 8001;
 
-app.use(
-  cors({
-    origin: "https://shiphit.in", // ✅ Only allow your production domain
-    methods: "GET,POST,PUT,DELETE",
-    allowedHeaders: "Content-Type,Authorization",
-  })
-);
+app.use(cors()); // Allow your frontend to call this proxy
 
 app.use(helmet());
 

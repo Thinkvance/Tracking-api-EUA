@@ -26,14 +26,15 @@ function formatReadableDate(date) {
   return date.toLocaleDateString("en-US", options);
 }
 
-function getEstimatedDate(packageConnectedDataTime, service) {
+function getEstimatedDate(packageConnectedDataTime, service, destination) {
   if (!packageConnectedDataTime) return "-";
-
   const estimatedDays =
     service === "Express"
       ? { start: 3, end: 4 }
       : service === "Economy"
       ? { start: 5, end: 7 }
+      : service === "Duty Free" && destination === "United Kingdom"
+      ? { start: 10, end: 14 }
       : service === "Duty Free"
       ? { start: 10, end: 14 }
       : null;

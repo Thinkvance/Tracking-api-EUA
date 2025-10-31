@@ -2,13 +2,11 @@ import axios from "axios";
 import regex from "../Utilis/regex.js";
 
 async function getVendorTrackingDetails_ATLANTIC(requestBody) {
-  console.log("requestBody", requestBody);
   try {
     const response = await axios.post(
       "https://live.tccs.in/api/v1/Tracking/Tracking",
       requestBody
     );
-    console.log("response", response.data);
     return [...response.data.Response.Events].map((result) => ({
       EventDate: result.EventDate,
       EventTime: result.EventTime,

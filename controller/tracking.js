@@ -79,7 +79,8 @@ const getTrackingDetails = async (req, res) => {
       receipt: docData.payment_Receipt_URL,
       EstimatedDate: getEstimatedDate.getEstimatedDate(
         docData.packageConnectedDataTime,
-        docData.service
+        docData.service,
+        docData.destination
       ),
     };
 
@@ -134,8 +135,6 @@ const getTrackingDetails_ATLANTIC = async (req, res) => {
 
     const docData = snapshot.docs[0].data();
 
-    console.log("docData.vendorAwbnumber", docData.vendorAwbnumber);
-
     const requestBody = {
       UserID: "ECSG03",
       Password: "ECSG03@123",
@@ -161,7 +160,8 @@ const getTrackingDetails_ATLANTIC = async (req, res) => {
       receipt: docData.payment_Receipt_URL,
       EstimatedDate: getEstimatedDate.getEstimatedDate(
         docData.packageConnectedDataTime,
-        docData.service
+        docData.service,
+        docData.destination
       ),
     };
 
@@ -243,7 +243,8 @@ const getTrackingDetails_UPS = async (req, res) => {
       receipt: docData.payment_Receipt_URL,
       EstimatedDate: getEstimatedDate.getEstimatedDate(
         docData.packageConnectedDataTime,
-        docData.service
+        docData.service,
+        docData.destination
       ),
     };
 
