@@ -9,6 +9,7 @@ import basicTrackingInfoDataFormat from "../Utilis/basicTrackingInfoDataFormat.j
 import vendorCredentials from "../Utilis/credentials.js";
 import getVendorTrackingDetails_ATLANTIC from "../vendordata/vendor-api-data_ATLANTIC.js";
 import getVendorTrackingDetails_UPS from "../vendordata/vendor-api-data_UPS.js";
+import getVendorTrackingDetails_ICLSelf from "../vendordata/vendor-api-data_ICLSelf.js";
 // Load service account JSON using fs/promises
 const serviceAccount = {
   type: "service_account",
@@ -277,8 +278,92 @@ const getTrackingDetails_UPS = async (req, res) => {
   }
 };
 
+const getTrackingDetails_ICLSelf = async (req, res) => {
+  const { awbNumber } = req.body;
+  console.log("awbNumber", awbNumber);
+
+  if (!awbNumber) {
+    return res.status(400).json({ error: "awbNumber is required!!" });
+  }
+
+  try {
+    const snapshot = await db
+      .collection("pickup")
+      .where("awbNumber", "==", awbNumber)
+      .get();
+
+    if (snapshot.empty) {
+      return res
+        .status(404)
+        .json({ error: "No document found with that awbNumber" });
+    }
+
+    const docData = snapshot.docs[0].data();
+
+    const requestBody = {
+      UserID: "PETTI0",
+      Password: "Nwl@1234",
+      AWBNo: docData.vendorAwbnumber,
+    };
+
+    const shipmentDetails = {
+      awbNumber: docData.awbNumber,
+      consigneephonenumber: docData.consigneephonenumber,
+      consignorphonenumber: docData.consignorphonenumber,
+
+      Delivery_Mode: docData.service,
+      Number_of_Boxes: docData.actualNoOfPackages
+        ? docData.actualNoOfPackages
+        : docData.postNumberOfPackages
+        ? docData.postNumberOfPackages
+        : Math.ceil(parseInt(docData.weightapx.replace(/\s*KG/i, "")) / 25),
+      Courier_Weight: docData.actualWeight
+        ? docData.actualWeight
+        : docData.postPickupWeight
+        ? docData.postPickupWeight
+        : docData.weightapx
+        ? docData.weightapx.replace(/\s*KG/i, "")
+        : "",
+      receipt: docData.payment_Receipt_URL,
+      EstimatedDate: getEstimatedDate.getEstimatedDate(
+        docData.packageConnectedDataTime,
+        docData.service,
+        docData.destination
+      ),
+    };
+
+    const statusTrail = getTrackingStatus(docData.status, docData);
+
+    if (docData.status !== "SHIPMENT CONNECTED") {
+      return res.status(200).json({
+        shipmentDetails: shipmentDetails,
+        trackingDetails: [...statusTrail, ...staticData],
+        currentStatus: getRecentEvent([...statusTrail, ...staticData]),
+        basicTrackingData: basicTrackingInfoDataFormat([
+          ...statusTrail,
+          ...staticData,
+        ]),
+      });
+    }
+
+    const vendorResponse = await getVendorTrackingDetails_ICLSelf(requestBody);
+    const updatedStructure =
+      getUpdatedTrackingStructure.getUpdatedTrackingStructure_UPS(
+        vendorResponse,
+        statusTrail,
+        shipmentDetails
+      );
+
+    return res.send(updatedStructure);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 export default {
   getTrackingDetails: getTrackingDetails,
   getTrackingDetails_ATLANTIC: getTrackingDetails_ATLANTIC,
   getTrackingDetails_UPS: getTrackingDetails_UPS,
+  getTrackingDetails_ICLSelf: getTrackingDetails_ICLSelf,
 };

@@ -1,7 +1,6 @@
 import express from "express";
 
 import getTrackingDetails from "../controller/tracking.js";
-import getVendorTrackingDetails_ATLANTIC from "../controller/tracking.js";
 const router = express.Router();
 
 router
@@ -13,5 +12,8 @@ router
 router
   .route("/ups/getTrackingStatusByAwb")
   .post(getTrackingDetails.getTrackingDetails_UPS);
+router
+  .route("/iclself/getTrackingStatusByAwb")
+  .post(getTrackingDetails.getTrackingDetails_ICLSelf);
 
 export default router;

@@ -47,9 +47,7 @@ function getUpdatedTrackingStructure(
       }
     }
 
-    const latestOnTheWay =
-      onTheWay.length > 0 ? onTheWay[onTheWay.length - 1] : null;
-
+    const latestOnTheWay = onTheWay.length > 0 ? onTheWay[0] : null;
     const merged = [
       ...(latestOnTheWay ? [latestOnTheWay] : []),
       ...delayStatus,
@@ -186,7 +184,6 @@ function getUpdatedTrackingStructure_ATLANTIC(
 
     const latestOnTheWay =
       onTheWay.length > 0 ? onTheWay[onTheWay.length - 1] : null;
-
     const merged = [
       ...(latestOnTheWay ? [latestOnTheWay] : []),
       ...delayStatus,
@@ -312,8 +309,7 @@ function getUpdatedTrackingStructure_UPS(
       }
     }
 
-    const latestOnTheWay =
-      onTheWay.length > 0 ? onTheWay[onTheWay.length - 1] : null;
+    const latestOnTheWay = onTheWay.length > 0 ? onTheWay[0] : null;
 
     const merged = [
       ...(latestOnTheWay ? [latestOnTheWay] : []),
