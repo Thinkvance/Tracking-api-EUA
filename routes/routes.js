@@ -6,6 +6,11 @@ const router = express.Router();
 router
   .route("/explus/getTrackingStatusByAwb")
   .post(getTrackingDetails.getTrackingDetails);
+
+router
+  .route("/dhl/getTrackingStatusByAwb")
+  .post(getTrackingDetails.getTrackingDetailsdhl);
+
 router
   .route("/atlantic/getTrackingStatusByAwb")
   .post(getTrackingDetails.getTrackingDetails_ATLANTIC);

@@ -10,6 +10,7 @@ import vendorCredentials from "../Utilis/credentials.js";
 import getVendorTrackingDetails_ATLANTIC from "../vendordata/vendor-api-data_ATLANTIC.js";
 import getVendorTrackingDetails_UPS from "../vendordata/vendor-api-data_UPS.js";
 import getVendorTrackingDetails_ICLSelf from "../vendordata/vendor-api-data_ICLSelf.js";
+import getVendorTrackingDetails_DHL from "../vendordata/vendor-api-data_DHL.js";
 // Load service account JSON using fs/promises
 const serviceAccount = {
   type: "service_account",
@@ -68,20 +69,20 @@ const getTrackingDetails = async (req, res) => {
       Number_of_Boxes: docData.actualNoOfPackages
         ? docData.actualNoOfPackages
         : docData.postNumberOfPackages
-        ? docData.postNumberOfPackages
-        : Math.ceil(parseInt(docData.weightapx.replace(/\s*KG/i, "")) / 25),
+          ? docData.postNumberOfPackages
+          : Math.ceil(parseInt(docData.weightapx.replace(/\s*KG/i, "")) / 25),
       Courier_Weight: docData.actualWeight
         ? docData.actualWeight
         : docData.postPickupWeight
-        ? docData.postPickupWeight
-        : docData.weightapx
-        ? docData.weightapx.replace(/\s*KG/i, "")
-        : "",
+          ? docData.postPickupWeight
+          : docData.weightapx
+            ? docData.weightapx.replace(/\s*KG/i, "")
+            : "",
       receipt: docData.payment_Receipt_URL,
       EstimatedDate: getEstimatedDate.getEstimatedDate(
         docData.packageConnectedDataTime,
         docData.service,
-        docData.destination
+        docData.destination,
       ),
     };
 
@@ -105,7 +106,7 @@ const getTrackingDetails = async (req, res) => {
       getUpdatedTrackingStructure.getUpdatedTrackingStructure(
         vendorResponse,
         statusTrail,
-        shipmentDetails
+        shipmentDetails,
       );
 
     return res.send(updatedStructure);
@@ -149,20 +150,20 @@ const getTrackingDetails_ATLANTIC = async (req, res) => {
       Number_of_Boxes: docData.actualNoOfPackages
         ? docData.actualNoOfPackages
         : docData.postNumberOfPackages
-        ? docData.postNumberOfPackages
-        : Math.ceil(parseInt(docData.weightapx.replace(/\s*KG/i, "")) / 25),
+          ? docData.postNumberOfPackages
+          : Math.ceil(parseInt(docData.weightapx.replace(/\s*KG/i, "")) / 25),
       Courier_Weight: docData.actualWeight
         ? docData.actualWeight
         : docData.postPickupWeight
-        ? docData.postPickupWeight
-        : docData.weightapx
-        ? docData.weightapx.replace(/\s*KG/i, "")
-        : "",
+          ? docData.postPickupWeight
+          : docData.weightapx
+            ? docData.weightapx.replace(/\s*KG/i, "")
+            : "",
       receipt: docData.payment_Receipt_URL,
       EstimatedDate: getEstimatedDate.getEstimatedDate(
         docData.packageConnectedDataTime,
         docData.service,
-        docData.destination
+        docData.destination,
       ),
     };
 
@@ -185,7 +186,7 @@ const getTrackingDetails_ATLANTIC = async (req, res) => {
       getUpdatedTrackingStructure.getUpdatedTrackingStructure_ATLANTIC(
         vendorResponse,
         statusTrail,
-        shipmentDetails
+        shipmentDetails,
       );
 
     return res.send(updatedStructure);
@@ -232,20 +233,20 @@ const getTrackingDetails_UPS = async (req, res) => {
       Number_of_Boxes: docData.actualNoOfPackages
         ? docData.actualNoOfPackages
         : docData.postNumberOfPackages
-        ? docData.postNumberOfPackages
-        : Math.ceil(parseInt(docData.weightapx.replace(/\s*KG/i, "")) / 25),
+          ? docData.postNumberOfPackages
+          : Math.ceil(parseInt(docData.weightapx.replace(/\s*KG/i, "")) / 25),
       Courier_Weight: docData.actualWeight
         ? docData.actualWeight
         : docData.postPickupWeight
-        ? docData.postPickupWeight
-        : docData.weightapx
-        ? docData.weightapx.replace(/\s*KG/i, "")
-        : "",
+          ? docData.postPickupWeight
+          : docData.weightapx
+            ? docData.weightapx.replace(/\s*KG/i, "")
+            : "",
       receipt: docData.payment_Receipt_URL,
       EstimatedDate: getEstimatedDate.getEstimatedDate(
         docData.packageConnectedDataTime,
         docData.service,
-        docData.destination
+        docData.destination,
       ),
     };
 
@@ -268,7 +269,7 @@ const getTrackingDetails_UPS = async (req, res) => {
       getUpdatedTrackingStructure.getUpdatedTrackingStructure_UPS(
         vendorResponse,
         statusTrail,
-        shipmentDetails
+        shipmentDetails,
       );
 
     return res.send(updatedStructure);
@@ -315,20 +316,20 @@ const getTrackingDetails_ICLSelf = async (req, res) => {
       Number_of_Boxes: docData.actualNoOfPackages
         ? docData.actualNoOfPackages
         : docData.postNumberOfPackages
-        ? docData.postNumberOfPackages
-        : Math.ceil(parseInt(docData.weightapx.replace(/\s*KG/i, "")) / 25),
+          ? docData.postNumberOfPackages
+          : Math.ceil(parseInt(docData.weightapx.replace(/\s*KG/i, "")) / 25),
       Courier_Weight: docData.actualWeight
         ? docData.actualWeight
         : docData.postPickupWeight
-        ? docData.postPickupWeight
-        : docData.weightapx
-        ? docData.weightapx.replace(/\s*KG/i, "")
-        : "",
+          ? docData.postPickupWeight
+          : docData.weightapx
+            ? docData.weightapx.replace(/\s*KG/i, "")
+            : "",
       receipt: docData.payment_Receipt_URL,
       EstimatedDate: getEstimatedDate.getEstimatedDate(
         docData.packageConnectedDataTime,
         docData.service,
-        docData.destination
+        docData.destination,
       ),
     };
 
@@ -351,7 +352,7 @@ const getTrackingDetails_ICLSelf = async (req, res) => {
       getUpdatedTrackingStructure.getUpdatedTrackingStructure_UPS(
         vendorResponse,
         statusTrail,
-        shipmentDetails
+        shipmentDetails,
       );
 
     return res.send(updatedStructure);
@@ -361,7 +362,108 @@ const getTrackingDetails_ICLSelf = async (req, res) => {
   }
 };
 
+const getTrackingDetailsdhl = async (req, res) => {
+  const { awbNumber } = req.body;
+
+  if (!awbNumber) {
+    return res.status(400).json({ error: "awbNumber is required!!" });
+  }
+
+  try {
+    const snapshot = await db
+      .collection("pickup")
+      .where("awbNumber", "==", awbNumber)
+      .get();
+
+    if (snapshot.empty) {
+      return res
+        .status(404)
+        .json({ error: "No document found with that awbNumber" });
+    }
+
+    const docData = snapshot.docs[0].data();
+
+    const shipmentDetails = {
+      awbNumber: docData.awbNumber,
+      consigneephonenumber: docData.consigneephonenumber,
+      consignorphonenumber: docData.consignorphonenumber,
+
+      Delivery_Mode: docData.service,
+      Number_of_Boxes: docData.actualNoOfPackages
+        ? docData.actualNoOfPackages
+        : docData.postNumberOfPackages
+          ? docData.postNumberOfPackages
+          : Math.ceil(parseInt(docData.weightapx.replace(/\s*KG/i, "")) / 25),
+      Courier_Weight: docData.actualWeight
+        ? docData.actualWeight
+        : docData.postPickupWeight
+          ? docData.postPickupWeight
+          : docData.weightapx
+            ? docData.weightapx.replace(/\s*KG/i, "")
+            : "",
+      receipt: docData.payment_Receipt_URL,
+      EstimatedDate: getEstimatedDate.getEstimatedDate(
+        docData.packageConnectedDataTime,
+        docData.service,
+        docData.destination,
+      ),
+    };
+
+    const statusTrail = getTrackingStatus(docData.status, docData);
+
+    if (docData.status !== "SHIPMENT CONNECTED") {
+      return res.status(200).json({
+        shipmentDetails: shipmentDetails,
+        trackingDetails: [...statusTrail, ...staticData],
+        currentStatus: getRecentEvent([...statusTrail, ...staticData]),
+        basicTrackingData: basicTrackingInfoDataFormat([
+          ...statusTrail,
+          ...staticData,
+        ]),
+      });
+    }
+
+    const dhlTrackingData = await getVendorTrackingDetails_DHL(
+      docData.vendorAwbnumber,
+    );
+
+    if (dhlTrackingData == false) {
+      return res.status(200).json({
+        shipmentDetails: shipmentDetails,
+        trackingDetails: [...statusTrail, ...staticData],
+        currentStatus: getRecentEvent([...statusTrail, ...staticData]),
+        basicTrackingData: basicTrackingInfoDataFormat([
+          ...statusTrail,
+          ...staticData,
+        ]),
+      });
+    }
+
+    try {
+      res.send({
+        shipmentDetails: shipmentDetails,
+        trackingDetails: [...statusTrail, ...dhlTrackingData.trackingDetails],
+        viewMoreDetails: dhlTrackingData.viewMoreDetails,
+        basicTrackingData: basicTrackingInfoDataFormat([
+          ...statusTrail,
+          ...dhlTrackingData.trackingDetails,
+        ]),
+        currentStatus: getRecentEvent([
+          ...statusTrail,
+          ...dhlTrackingData.trackingDetails,
+        ]),
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 export default {
+  getTrackingDetailsdhl: getTrackingDetailsdhl,
   getTrackingDetails: getTrackingDetails,
   getTrackingDetails_ATLANTIC: getTrackingDetails_ATLANTIC,
   getTrackingDetails_UPS: getTrackingDetails_UPS,
