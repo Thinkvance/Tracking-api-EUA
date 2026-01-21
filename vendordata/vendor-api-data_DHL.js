@@ -7,24 +7,28 @@ const DEFAULT_TRACKING_TIMELINE = [
     Location: "",
     Progress: false,
     DateTime: "",
+    dropdown: "",
   },
   {
     Status: "Out For Delivery Today",
     Location: "",
     Progress: false,
     DateTime: "",
+    dropdown: "",
   },
   {
     Status: "On the way",
     Location: "",
     Progress: false,
     DateTime: "",
+    dropdown: "",
   },
   {
     Status: "Custom Clearence",
     Location: "",
     Progress: false,
     DateTime: "",
+    dropdown: "",
   },
 ];
 
@@ -125,6 +129,12 @@ function formatDHLTracking(data) {
       reversedTimeline[i].Progress = true;
     }
   }
+  // ✅ Pass 4: Add dropdown for "On the way"
+  reversedTimeline.forEach((item) => {
+    if (item.Status === "On the way" && item.Progress) {
+      item.dropdown = "View More";
+    }
+  });
 
   return reversedTimeline;
 }
@@ -198,7 +208,9 @@ async function getVendorTrackingDetails_DHL(AWB) {
     }
 
     return {
-      viewMoreDetails: formatTrackingEvents(jsonResult.AWBInfo.ShipmentEvent),
+      viewMoreDetails: formatTrackingEvents(
+        jsonResult.AWBInfo.ShipmentEvent.reverse(),
+      ),
       trackingDetails: formatDHLTracking(jsonResult),
     };
   } catch (error) {
