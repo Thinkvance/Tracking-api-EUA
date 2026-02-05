@@ -194,7 +194,6 @@ async function getVendorTrackingDetails_DHL(AWB) {
     });
 
     if (jsonResult.AWBInfo == "") {
-      console.log("test");
       return false;
     }
 

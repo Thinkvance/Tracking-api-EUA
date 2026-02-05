@@ -13,8 +13,8 @@ const PORT = process.env.PORT || 8001;
 
 app.use(
   cors({
-    origin: "*", // or "*"
-    methods: ["GET", "POST"],
+    origin: ["https://shiphit.com", "https://shiphit.in"],
+    methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
